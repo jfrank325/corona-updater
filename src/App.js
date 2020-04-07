@@ -1,26 +1,133 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios';
+import CanvasJSReact from './canvasjs.react';
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function App() {
+  const [state, setState] = useState({
+    confirmed: 0,
+    recovered: 0,
+    deaths: 0,
+    countries: [],
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios('https://covid19.mathdro.id/api');
+      const resCountries = await axios('https://covid19.mathdro.id/api/countries');
+      const { confirmed, recovered, deaths } = res.data;
+      const countries = Object.values(resCountries.data.countries);
+      console.log('country response', resCountries);
+      console.log('full response', res);
+      setState({ ...state, confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value, countries });
+    };
+    getData();
+  }, []);
+
+  const getCountriesData = async (event) => {
+    const res = await axios(`https://covid19.mathdro.id/api/countries/${event.target.value}`);
+    const { confirmed, recovered, deaths } = res.data;
+    setState({ ...state, confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value });
+  };
+
+  const countryOptions = () => {
+    return state.countries.map((country, index) => {
+      return <option key={index}>{country.name}</option>;
+    });
+  };
+
+  const options = {
+    animationEnabled: true,
+    exportEnabled: true,
+    theme: 'light1', // "light1", "dark1", "dark2"
+    title: {
+      text: 'Ratios',
+    },
+    data: [
+      {
+        type: 'pie',
+        indexLabel: '{label}: {y}%',
+        startAngle: -90,
+        dataPoints: [
+          { y: state.confirmed, label: 'Confirmed' },
+          { y: state.recovered, label: 'Recovered' },
+          { y: state.deaths, label: 'Deaths' },
+        ],
+      },
+    ],
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>How Is Your Country Doing?</h1>
+
+      <select className="select" onChange={getCountriesData}>
+        {countryOptions()}
+      </select>
+      <div>
+        <CanvasJSChart options={options} />
+      </div>
+      <div className="flex">
+        <div className="box confirmed">
+          <h3>Confirmed Cases</h3>
+          <h4>{state.confirmed}</h4>
+        </div>
+        <div className="box recovered">
+          <h3>Recovered</h3>
+          <h4>{state.recovered}</h4>
+        </div>
+        <div className="box deaths">
+          <h3>Deaths</h3>
+          <h4>{state.deaths}</h4>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default App;
+
+// /* App.js */
+// var React = require('react');
+// var Component = React.Component;
+// var CanvasJSReact = require('./canvasjs.react');
+// var CanvasJS = CanvasJSReact.CanvasJS;
+// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+// class App extends Component {
+// 	render() {
+// 		const options = {
+// 			animationEnabled: true,
+// 			exportEnabled: true,
+// 			theme: "dark2", // "light1", "dark1", "dark2"
+// 			title:{
+// 				text: "Trip Expenses"
+// 			},
+// 			data: [{
+// 				type: "pie",
+// 				indexLabel: "{label}: {y}%",
+// 				startAngle: -90,
+// 				dataPoints: [
+// 					{ y: 20, label: "Airfare" },
+// 					{ y: 24, label: "Food & Drinks" },
+// 					{ y: 20, label: "Accomodation" },
+// 					{ y: 14, label: "Transportation" },
+// 					{ y: 12, label: "Activities" },
+// 					{ y: 10, label: "Misc" }
+// 				]
+// 			}]
+// 		}
+
+// 		return (
+// 		<div>
+// 			<CanvasJSChart options = {options}
+// 				/* onRef={ref => this.chart = ref} */
+// 			/>
+// 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
+// 		</div>
+// 		);
+// 	}
+// }
+
+// module.exports = App;
