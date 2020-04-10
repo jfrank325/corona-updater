@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/jfrank325/corona-updater/static/css/main.6ff7f1ba.chunk.css",
+    "main.js": "/jfrank325/corona-updater/static/js/main.f41f131c.chunk.js",
+    "main.js.map": "/jfrank325/corona-updater/static/js/main.f41f131c.chunk.js.map",
+    "runtime-main.js": "/jfrank325/corona-updater/static/js/runtime-main.8547c765.js",
+    "runtime-main.js.map": "/jfrank325/corona-updater/static/js/runtime-main.8547c765.js.map",
+    "static/js/2.e68e0282.chunk.js": "/jfrank325/corona-updater/static/js/2.e68e0282.chunk.js",
+    "static/js/2.e68e0282.chunk.js.map": "/jfrank325/corona-updater/static/js/2.e68e0282.chunk.js.map",
+    "index.html": "/jfrank325/corona-updater/index.html",
+    "precache-manifest.261b1038f1c365f555a8a5f56cada884.js": "/jfrank325/corona-updater/precache-manifest.261b1038f1c365f555a8a5f56cada884.js",
+    "service-worker.js": "/jfrank325/corona-updater/service-worker.js",
+    "static/css/main.6ff7f1ba.chunk.css.map": "/jfrank325/corona-updater/static/css/main.6ff7f1ba.chunk.css.map",
+    "static/js/2.e68e0282.chunk.js.LICENSE.txt": "/jfrank325/corona-updater/static/js/2.e68e0282.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8547c765.js",
+    "static/js/2.e68e0282.chunk.js",
+    "static/css/main.6ff7f1ba.chunk.css",
+    "static/js/main.f41f131c.chunk.js"
+  ]
+}
