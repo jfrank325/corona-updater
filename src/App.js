@@ -58,8 +58,8 @@ function App() {
         startAngle: -90,
         dataPoints: [
           { y: state.confirmed, label: 'Confirmed' },
-          { y: state.recovered, label: 'Recovered' },
           { y: state.deaths, label: 'Deaths' },
+          { y: state.recovered, label: 'Recovered' },
         ],
       },
     ],
