@@ -13,17 +13,24 @@ function App() {
   });
 
   useEffect(() => {
-    const getData = async () => {
-      const res = await axios('https://covid19.mathdro.id/api');
-      const resCountries = await axios('https://covid19.mathdro.id/api/countries');
-      const { confirmed, recovered, deaths } = res.data;
-      const countries = Object.values(resCountries.data.countries);
-      console.log('country response', resCountries);
-      console.log('full response', res);
-      setState({ ...state, confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value, countries });
-    };
     getData();
   }, []);
+
+  const getData = async () => {
+    const res = await axios('https://covid19.mathdro.id/api');
+    const resCountries = await axios('https://covid19.mathdro.id/api/countries');
+    const { confirmed, recovered, deaths } = res.data;
+    const countries = Object.values(resCountries.data.countries);
+    console.log('country response', resCountries);
+    console.log('full response', res);
+    setState(() => ({
+      ...state,
+      confirmed: confirmed.value,
+      recovered: recovered.value,
+      deaths: deaths.value,
+      countries,
+    }));
+  };
 
   const getCountriesData = async (event) => {
     const res = await axios(`https://covid19.mathdro.id/api/countries/${event.target.value}`);
@@ -39,7 +46,7 @@ function App() {
 
   const options = {
     animationEnabled: true,
-    exportEnabled: true,
+    // exportEnabled: true,
     theme: 'light1', // "light1", "dark1", "dark2"
     title: {
       text: 'Ratios',
@@ -60,7 +67,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Corona Country Checker</h1>
+      <h1>Corona Country Comparison</h1>
 
       <select className="select" placeholder="World" onChange={getCountriesData}>
         {countryOptions()}
