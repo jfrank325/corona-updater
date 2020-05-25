@@ -55,7 +55,7 @@ function App() {
       {
         type: 'pie',
         indexLabel: '{label}: {y}',
-        startAngle: -90,
+        startAngle: 0,
         dataPoints: [
           { y: state.confirmed, label: 'Confirmed' },
           { y: state.deaths, label: 'Deaths' },
