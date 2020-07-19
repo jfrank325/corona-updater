@@ -67,7 +67,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Corona Country Comparison</h1>
+      <h1>Covid Country Comparison</h1>
       <select className="select" placeholder="World" onChange={getCountriesData}>
         {countryOptions()}
       </select>
