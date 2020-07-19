@@ -5,7 +5,7 @@ import CanvasJSReact from './canvasjs.react';
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function App() {
-  const [state, setState] = useState({
+  const [covidInfo, setCovidInfo] = useState({
     confirmed: 0,
     recovered: 0,
     deaths: 0,
@@ -21,10 +21,10 @@ function App() {
     const resCountries = await axios('https://covid19.mathdro.id/api/countries');
     const { confirmed, recovered, deaths } = res.data;
     const countries = Object.values(resCountries.data.countries);
-    console.log('country response', resCountries);
-    console.log('full response', res);
-    setState(() => ({
-      ...state,
+    // console.log('country response', resCountries);
+    // console.log('full response', res);
+    setCovidInfo(() => ({
+      ...covidInfo,
       confirmed: confirmed.value,
       recovered: recovered.value,
       deaths: deaths.value,
@@ -35,11 +35,11 @@ function App() {
   const getCountriesData = async (event) => {
     const res = await axios(`https://covid19.mathdro.id/api/countries/${event.target.value}`);
     const { confirmed, recovered, deaths } = res.data;
-    setState({ ...state, confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value });
+    setCovidInfo({ ...covidInfo, confirmed: confirmed.value, recovered: recovered.value, deaths: deaths.value });
   };
 
   const countryOptions = () => {
-    return state.countries.map((country, index) => {
+    return covidInfo.countries.map((country, index) => {
       return <option key={index}>{country.name}</option>;
     });
   };
@@ -57,9 +57,9 @@ function App() {
         indexLabel: '{label}: {y}',
         startAngle: 0,
         dataPoints: [
-          { y: state.confirmed, label: 'Confirmed' },
-          { y: state.deaths, label: 'Deaths' },
-          { y: state.recovered, label: 'Recovered' },
+          { y: covidInfo.confirmed, label: 'Confirmed' },
+          { y: covidInfo.recovered, label: 'Recovered' },
+          { y: covidInfo.deaths, label: 'Deaths' },
         ],
       },
     ],
@@ -68,7 +68,6 @@ function App() {
   return (
     <div className="container">
       <h1>Corona Country Comparison</h1>
-
       <select className="select" placeholder="World" onChange={getCountriesData}>
         {countryOptions()}
       </select>
@@ -78,15 +77,15 @@ function App() {
       <div className="flex">
         <div className="box confirmed">
           <h3>Confirmed Cases</h3>
-          <h4>{state.confirmed}</h4>
+          <h4>{covidInfo.confirmed}</h4>
         </div>
         <div className="box recovered">
           <h3>Recovered</h3>
-          <h4>{state.recovered}</h4>
+          <h4>{covidInfo.recovered}</h4>
         </div>
         <div className="box deaths">
           <h3>Deaths</h3>
-          <h4>{state.deaths}</h4>
+          <h4>{covidInfo.deaths}</h4>
         </div>
       </div>
     </div>
